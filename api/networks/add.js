@@ -20,6 +20,13 @@ module.exports = async (event) => {
 
     //find last network created
     var lastNetwork = "10.17.0.0";
+
+    if(event.POST.subnet && /^[0-9\.]{4,32}$/.test(event.POST.subnet))
+    {
+        lastNetwork = event.POST.subnet;
+    }
+
+
     var lastNetworkFile = "./nebula/config/networks/last.txt";
     if (fs.existsSync(lastNetworkFile)) {
         lastNetwork = fs.readFileSync(lastNetworkFile, {encoding:'utf8', flag:'r'});

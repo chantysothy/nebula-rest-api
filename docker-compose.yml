@@ -14,22 +14,9 @@ services:
       - /dev/net/tun
     stop_grace_period: 1s
     ports:
-      - "4242:4242/udp"
+      - "4243:4242/udp"
+      - "127.0.0.1:9001:9000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./nebula/config:/usr/src/app/nebula/config
       
-  caddy:
-    image: caddy
-    restart: unless-stopped
-    env_file:
-      - .env
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./caddy/:/data
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - $SSL_CERT:/data/caddy/certificates/cert.pem
-      - $SSL_KEY:/data/caddy/certificates/key.pem

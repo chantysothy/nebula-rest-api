@@ -1,5 +1,9 @@
+require('dotenv').config();
 var childProc = require('child_process');
 var fs = require("fs");
+
+const subnet = process.env.NEBULA_SUBNET || "192.168.168.0/24";
+const lh_ip = process.env.LIGHTHOUSE_IP || "192.168.168.254";
 
 function execCommand(command){
     return new Promise(function(resolve, reject) {
@@ -54,7 +58,7 @@ module.exports.CheckLighthouseInstallation = async () => {
         cp ca.crt /etc/nebula/ca.crt;
         cp ca.key /etc/nebula/ca.key;
 
-        ./nebula-cert sign -name "lh" -ip "10.255.255.1/8"
+        ./nebula-cert sign -name "lh" -ip "${subnet}"
         cp lh.crt /etc/nebula/lh.crt;
         cp lh.key /etc/nebula/lh.key;
         
@@ -76,7 +80,7 @@ module.exports.CheckLighthouseInstallation = async () => {
         var result = await this.execCommand(`
         cd ./nebula;
 
-        ./nebula-cert sign -name "lh" -ip "10.255.255.1/8"
+        ./nebula-cert sign -name "lh" -ip "${subnet}"
 
         cp lh.crt ${root}/nebula/config/lh.crt;
         cp lh.key ${root}/nebula/config/lh.key;
@@ -99,7 +103,7 @@ pki:
     key: ${root}/nebula/config/lh.key
 
 static_host_map:
-    "10.255.255.1": ["${process.env.HOST_DOMAIN}:4242"]
+    "${lh_ip}": ["${process.env.HOST_DOMAIN}:4242"]
 
 lighthouse:
     am_lighthouse: true
@@ -146,7 +150,7 @@ outbound:
 inbound:
     # Allow icmp between any nebula hosts
     - port: any
-      proto: icmp
+      proto: any
       host: any
 `);
     }
