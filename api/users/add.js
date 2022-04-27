@@ -115,7 +115,7 @@ module.exports = async (event) => {
 
   var static_host_map = `
 static_host_map:
-  "${process.env.LIGHTHOUSE_IP}": ["${process.env.HOST_DOMAIN}:4243"]    
+  "${process.env.LIGHTHOUSE_IP}": ["${process.env.HOST_DOMAIN}:4242"]    
 `;
 
   var hosts = `
@@ -127,7 +127,7 @@ static_host_map:
   if (process.env.LIGHTHOUSE_IP != "10.255.255.1") {
     static_host_map = `
 static_host_map:
-  "${process.env.LIGHTHOUSE_IP}": ["${process.env.HOST_DOMAIN}:4243"]`;
+  "${process.env.LIGHTHOUSE_IP}": ["${process.env.HOST_DOMAIN}:4242"]`;
 
     hosts = `
   hosts:

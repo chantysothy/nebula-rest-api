@@ -18,7 +18,7 @@ services:
     stop_grace_period: 1s
     ports:
       - "127.0.0.1:9001:9000"
-      - "4243:4242/udp"
+      - "4242:4242/udp"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./nebula/config:/usr/src/app/nebula/config
